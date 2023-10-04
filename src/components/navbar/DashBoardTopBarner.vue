@@ -2,11 +2,14 @@
   <div class="navbar">
     <div class="nav-item-container">
       <div class="left">
-        <div class="logo">
-          <img :src="logo" alt="logo" />
-          <p class="text1">Assign</p>
-          <p class="text2">IT</p>
-        </div>
+        <RouterLink to="/">
+
+          <div class="logo">
+            <img :src="logo" alt="logo" />
+            <p class="text1">Assign</p>
+            <p class="text2">IT</p>
+          </div>
+        </RouterLink>
 
         <div class="dashboard-buttons">
           <div v-for="item in dashboardItems" :key="item.id">
@@ -23,21 +26,11 @@
   </div>
 </template>
 
-<script lang ="ts">
+<script lang ="ts" setup>
 import DashBoardNavButtons from "../dashboard/DashBoardNavButtons.vue";
 import { dashboardItems } from "../../constants/dashboardItems";
 import logo from '../../assets//svgs/logo.svg'
-export default {
-  components: {
-    DashBoardNavButtons,
-  },
-  data() {
-    return {
-      dashboardItems,
-      logo
-    };
-  },
-};
+
 </script>
 
 <style scoped>
@@ -79,6 +72,7 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+
 .dashboard-buttons {
   display: flex;
   align-items: center;
@@ -121,5 +115,9 @@ export default {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+}
+
+a{
+  text-decoration: none;
 }
 </style>

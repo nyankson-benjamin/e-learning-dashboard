@@ -15,7 +15,7 @@
       <br>
       <BaseInput placeholder="Lastname" type="text" v-model="lname" />
       <br>
-      <CreateUserButton text="Create" :border="false" width="100px" @log="logName" />
+      <CreateUserButton text="Create" :border="false" width="100px" @log="handleAddUser" :disabled="!allSet" title="Student"/>
     </UploadModal>
 
     <FileModal v-show="openFile">
@@ -25,7 +25,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { useQuery } from "@vue/apollo-composable";
 import { usersQueries } from "../../graphQL/queries";
 import UsersTable from "./UsersTable.vue";
@@ -36,57 +36,11 @@ import ModalHeaderText from "./ModalHeaderText.vue";
 import BaseInput from "../Forms/BaseInput.vue";
 import CreateUserButton from "../Buttons/CreateUserButton.vue";
 import UploadFile from "./UploadFile.vue";
+import useAddUser from '../../composables/useAddUser'
 
 
-import { ref, watchEffect } from 'vue'
-import store from '@/store';
 
-export default {
-  components: {
-    UsersTable,
-    DashboardActions,
-    UploadModal,
-    ModalHeaderText,
-    BaseInput,
-    CreateUserButton,
-    FileModal,
-    UploadFile
-  },
+const { loading, result } = useQuery(usersQueries);
+const { email, fname, lname, open, openFile, allSet, handleAddUser } = useAddUser()
 
-  setup() {
-    const { loading, result } = useQuery(usersQueries);
-    const email = ref('')
-    const fname = ref('')
-    const lname = ref('')
-    const open = ref(false)
-    const openFile = ref(false)
-
-
-    const logName = () => {
-      console.log(email.value);
-      alert('user created successfully')
-    }
-
-    watchEffect(() => {
-      open.value = store.getters.openModal
-      console.log('state', store.getters.openModal);
-    })
-
-    watchEffect(() => {
-      openFile.value = store.getters.openFileModal
-      open.value = false
-    })
-
-    return {
-      loading,
-      result,
-      email,
-      fname,
-      lname,
-      logName,
-      open,
-      openFile
-    };
-  },
-};
 </script>
