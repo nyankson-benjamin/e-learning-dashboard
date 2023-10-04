@@ -8,7 +8,7 @@
                 <th>Action</th>
             </tr>
 
-            <tr v-for="user in users" :key="user.id" class="user" @click="action(`${user.firstName} ${user.lastName}`)">
+            <tr v-for="user in users" :key="user.id" class="user">
 
                 <td>{{ user.id }}</td>
                 <td>{{ user.firstName }} {{ user.lastName }}</td>
